@@ -1,6 +1,6 @@
 # use-abort-signal
 
-English | <a href="https://github.com/1adybug/use-abort-signal/blob/master/README.zh-CN.md">简体中文</a>
+English | <a href="https://github.com/1adybug/use-abort-signal/blob/main/README.zh-CN.md">简体中文</a>
 
 [![NPM version](https://img.shields.io/npm/v/use-abort-signal.svg?style=flat)](https://npmjs.org/package/use-abort-signal)
 [![NPM downloads](https://img.shields.io/npm/dm/use-abort-signal
