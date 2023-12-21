@@ -4,8 +4,8 @@ export function isAbortError(error: unknown): error is DOMException {
     return error instanceof DOMException && error.name === "AbortError"
 }
 
-export function useAbortSignal(effect: (signal: AbortSignal) => Promise<void>, callback: () => void, deps?: DependencyList): void
 export function useAbortSignal(effect: (signal: AbortSignal) => Promise<void>, deps?: DependencyList): void
+export function useAbortSignal(effect: (signal: AbortSignal) => Promise<void>, callback: () => void, deps?: DependencyList): void
 export function useAbortSignal(effect: (signal: AbortSignal) => Promise<void>, callbackOrDeps?: (() => void) | DependencyList, deps?: DependencyList) {
     if (callbackOrDeps === undefined) {
         useEffect(() => {
@@ -49,65 +49,42 @@ export function useAbortSignal(effect: (signal: AbortSignal) => Promise<void>, c
     }, callbackOrDeps)
 }
 
-const originalFetch = fetch
-
-export function useAbortableFetch(effect: (fetch: typeof originalFetch) => Promise<void>, callback: () => void, deps?: DependencyList): void
-export function useAbortableFetch(effect: (fetch: typeof originalFetch) => Promise<void>, deps?: DependencyList): void
-export function useAbortableFetch(effect: (fetch: typeof originalFetch) => Promise<void>, callbackOrDeps?: (() => void) | DependencyList, deps?: DependencyList) {
+export function useAbortableFetch(effect: (fetch: typeof window.fetch) => Promise<void>, deps?: DependencyList): void
+export function useAbortableFetch(effect: (fetch: typeof window.fetch) => Promise<void>, callback: () => void, deps?: DependencyList): void
+export function useAbortableFetch(effect: (fetch: typeof window.fetch) => Promise<void>, callbackOrDeps?: (() => void) | DependencyList, deps?: DependencyList) {
     if (callbackOrDeps === undefined) {
-        useEffect(() => {
-            const controller = new AbortController()
-            const fetch: typeof originalFetch = (input, init) => {
+        useAbortSignal(async signal => {
+            const fetch: typeof window.fetch = (input, init) => {
                 init ??= {}
-                init.signal = controller.signal
-                return originalFetch(input, init)
+                init.signal = signal
+                return window.fetch(input, init)
             }
-            effect(fetch).catch(error => {
-                if (!isAbortError(error)) {
-                    throw error
-                }
-            })
-            return () => {
-                controller.abort()
-            }
+            effect(fetch)
         })
         return
     }
     if (typeof callbackOrDeps === "function") {
-        useEffect(() => {
-            const controller = new AbortController()
-            const fetch: typeof originalFetch = (input, init) => {
-                init ??= {}
-                init.signal = controller.signal
-                return originalFetch(input, init)
-            }
-            effect(fetch).catch(error => {
-                if (!isAbortError(error)) {
-                    throw error
+        useAbortSignal(
+            async signal => {
+                const fetch: typeof window.fetch = (input, init) => {
+                    init ??= {}
+                    init.signal = signal
+                    return window.fetch(input, init)
                 }
-            })
-            return () => {
-                controller.abort()
-                callbackOrDeps()
-            }
-        }, deps)
+                effect(fetch)
+            },
+            callbackOrDeps,
+            deps
+        )
         return
     }
-    useEffect(() => {
-        const controller = new AbortController()
-        const fetch: typeof originalFetch = (input, init) => {
+    useAbortSignal(async signal => {
+        const fetch: typeof window.fetch = (input, init) => {
             init ??= {}
-            init.signal = controller.signal
-            return originalFetch(input, init)
+            init.signal = signal
+            return window.fetch(input, init)
         }
-        effect(fetch).catch(error => {
-            if (!isAbortError(error)) {
-                throw error
-            }
-        })
-        return () => {
-            controller.abort()
-        }
+        effect(fetch)
     }, callbackOrDeps)
 }
 
