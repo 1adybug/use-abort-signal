@@ -1,5 +1,9 @@
 import { type DependencyList, useEffect } from "react"
 
+export function isAbortError(error: unknown): error is DOMException {
+    return error instanceof DOMException && error.name === "AbortError"
+}
+
 export function useAbortSignal(effect: (signal: AbortSignal) => Promise<void>, callback: () => void, deps?: DependencyList): void
 export function useAbortSignal(effect: (signal: AbortSignal) => Promise<void>, deps?: DependencyList): void
 export function useAbortSignal(effect: (signal: AbortSignal) => Promise<void>, callbackOrDeps?: (() => void) | DependencyList, deps?: DependencyList) {
@@ -7,7 +11,7 @@ export function useAbortSignal(effect: (signal: AbortSignal) => Promise<void>, c
         useEffect(() => {
             const controller = new AbortController()
             effect(controller.signal).catch(error => {
-                if (!(error instanceof DOMException) || error.name !== "AbortError") {
+                if (!isAbortError(error)) {
                     throw error
                 }
             })
@@ -21,7 +25,7 @@ export function useAbortSignal(effect: (signal: AbortSignal) => Promise<void>, c
         useEffect(() => {
             const controller = new AbortController()
             effect(controller.signal).catch(error => {
-                if (!(error instanceof DOMException) || error.name !== "AbortError") {
+                if (!isAbortError(error)) {
                     throw error
                 }
             })
@@ -35,7 +39,7 @@ export function useAbortSignal(effect: (signal: AbortSignal) => Promise<void>, c
     useEffect(() => {
         const controller = new AbortController()
         effect(controller.signal).catch(error => {
-            if (!(error instanceof DOMException) || error.name !== "AbortError") {
+            if (!isAbortError(error)) {
                 throw error
             }
         })
@@ -59,7 +63,7 @@ export function useAbortableFetch(effect: (fetch: typeof originalFetch) => Promi
                 return originalFetch(input, init)
             }
             effect(fetch).catch(error => {
-                if (!(error instanceof DOMException) || error.name !== "AbortError") {
+                if (!isAbortError(error)) {
                     throw error
                 }
             })
@@ -78,7 +82,7 @@ export function useAbortableFetch(effect: (fetch: typeof originalFetch) => Promi
                 return originalFetch(input, init)
             }
             effect(fetch).catch(error => {
-                if (!(error instanceof DOMException) || error.name !== "AbortError") {
+                if (!isAbortError(error)) {
                     throw error
                 }
             })
@@ -97,7 +101,7 @@ export function useAbortableFetch(effect: (fetch: typeof originalFetch) => Promi
             return originalFetch(input, init)
         }
         effect(fetch).catch(error => {
-            if (!(error instanceof DOMException) || error.name !== "AbortError") {
+            if (!isAbortError(error)) {
                 throw error
             }
         })
