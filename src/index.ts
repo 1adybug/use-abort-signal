@@ -106,3 +106,5 @@ export function useAbortableFetch(effect: (fetch: typeof originalFetch) => Promi
         }
     }, callbackOrDeps)
 }
+
+export default useAbortSignal
