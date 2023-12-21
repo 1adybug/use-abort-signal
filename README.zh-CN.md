@@ -77,7 +77,7 @@ useAbortableFetch(
         // 无需添加 signal，会自动添加
         const response = await fetch("xxx")
     },
-    []
+    [/** 依赖项 */]
 )
 
 useAbortableFetch(
@@ -87,6 +87,6 @@ useAbortableFetch(
     () => {
         // 依赖项改变或者组件卸载时，被执行
     },
-    []
+    [/** 依赖项 */]
 )
 ```

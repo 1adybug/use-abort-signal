@@ -23,6 +23,8 @@ Useage：
 
 ```typescript
 import useAbortSignal from "use-abort-signal"
+// Or
+import { useAbortSignal } from "use-abort-signal"
 
 useAbortSignal(
     async signal => {
@@ -40,8 +42,6 @@ If you need to perform certain actions when the dependencies change or the compo
 
 ```typescript
 import useAbortSignal from "use-abort-signal"
-// Or
-import { useAbortSignal } from "use-abort-signal"
 
 useAbortSignal(
     async signal => {
@@ -77,7 +77,7 @@ useAbortableFetch(
         // No need to add a signal, it will be added automatically.
         const response = await fetch("xxx")
     },
-    []
+    [/** dependencies */]
 )
 
 useAbortableFetch(
@@ -87,6 +87,6 @@ useAbortableFetch(
     () => {
         // Executed when dependencies change or the component is unmounted.
     },
-    []
+    [/** dependencies */]
 )
 ```
