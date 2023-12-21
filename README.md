@@ -67,7 +67,7 @@ export function useAbortableFetch(effect: (fetch: typeof window.fetch) => Promis
 export function useAbortableFetch(effect: (fetch: typeof window.fetch) => Promise<void>, callback: () => void, deps?: DependencyList): void
 ```
 
-The usage is basically the same as `useAbortSignal`, except that the first function's parameter changes from abortSignal to fetch:
+The usage is basically the same as `useAbortSignal`, except that the first function's parameter changes from `abortSignal` to `fetch`:
 
 ```typescript
 import { useAbortableFetch } from "use-abort-signal"
