@@ -2,6 +2,7 @@
     "name": "use-abort-signal",
     "version": "0.4.3",
     "description": "useAbortSignal",
+    "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
