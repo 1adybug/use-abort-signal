@@ -1,6 +1,6 @@
 {
     "name": "use-abort-signal",
-    "version": "0.5.1",
+    "version": "0.5.2",
     "description": "useAbortSignal",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
