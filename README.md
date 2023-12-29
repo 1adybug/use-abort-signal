@@ -18,7 +18,7 @@ export function useAbortSignal(effect: (signal: AbortSignal) => Promise<void>, d
 export function useAbortSignal(effect: (signal: AbortSignal) => Promise<void>, callback: () => void, deps?: DependencyList): void
 ```
 
-Useage：
+Usage：
 
 ```typescript
 import useAbortSignal from "use-abort-signal"
