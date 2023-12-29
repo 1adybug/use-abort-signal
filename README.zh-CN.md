@@ -3,8 +3,7 @@
 <a href="https://github.com/1adybug/use-abort-signal/blob/main/README.md">English</a> | 简体中文
 
 [![NPM version](https://img.shields.io/npm/v/use-abort-signal.svg?style=flat)](https://npmjs.org/package/use-abort-signal)
-[![NPM downloads](https://img.shields.io/npm/dm/use-abort-signal
-)](https://npmjs.org/package/use-abort-signal)
+[![NPM downloads](https://img.shields.io/npm/dm/use-abort-signal)](https://npmjs.org/package/use-abort-signal)
 
 在 `react` 的开发过程中，经常会需要在 `useEffect` 中进行网络请求，然而当 `useEffect` 的依赖项改变或者组件卸载时，可能网络请求还未完成，造成意料之外的作用。`use-abort-signal` 便是用于解决这一问题，安全地取消 `useEffect` 中的 `fetch` 请求。
 

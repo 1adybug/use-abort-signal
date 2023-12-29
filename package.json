@@ -1,7 +1,7 @@
 {
     "name": "use-abort-signal",
     "version": "0.5.1",
-    "description": "useAbortSignal",
+    "description": "🌠 safely cancel `fetch` requests in `useEffect`",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
     "scripts": {
@@ -10,7 +10,7 @@
         "build:deps": "father prebundle",
         "prepublishOnly": "father doctor && npm run build"
     },
-    "keywords": [],
+    "keywords": ["react", "react-abort-signal", "useAbortSignal", "AbortSignal"],
     "authors": [
         "lurongv@qq.com"
     ],

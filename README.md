@@ -3,8 +3,7 @@
 English | <a href="https://github.com/1adybug/use-abort-signal/blob/main/README.zh-CN.md">简体中文</a>
 
 [![NPM version](https://img.shields.io/npm/v/use-abort-signal.svg?style=flat)](https://npmjs.org/package/use-abort-signal)
-[![NPM downloads](https://img.shields.io/npm/dm/use-abort-signal
-)](https://npmjs.org/package/use-abort-signal)
+[![NPM downloads](https://img.shields.io/npm/dm/use-abort-signal)](https://npmjs.org/package/use-abort-signal)
 
 During the development process with `react`, it is often necessary to make network requests within `useEffect`. However, when the dependencies of `useEffect` change or the component is unmounted, the network request might not be completed yet, leading to unexpected effects. `use-abort-signal` is designed to solve this problem by safely canceling `fetch` requests in `useEffect`.
 
