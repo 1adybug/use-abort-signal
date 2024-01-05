@@ -4,9 +4,9 @@ export function isAbortError(error: unknown): error is DOMException {
     return error instanceof DOMException && error.name === "AbortError"
 }
 
-export function useAbortSignal(effect: (signal: AbortSignal) => Promise<void>, deps?: DependencyList): void
-export function useAbortSignal(effect: (signal: AbortSignal) => Promise<void>, callback: () => void, deps?: DependencyList): void
-export function useAbortSignal(effect: (signal: AbortSignal) => Promise<void>, callbackOrDeps?: (() => void) | DependencyList, deps?: DependencyList) {
+export function useAbortSignal(effect: (signal: AbortSignal) => Promise<any>, deps?: DependencyList): void
+export function useAbortSignal(effect: (signal: AbortSignal) => Promise<any>, callback: () => void, deps?: DependencyList): void
+export function useAbortSignal(effect: (signal: AbortSignal) => Promise<any>, callbackOrDeps?: (() => void) | DependencyList, deps?: DependencyList) {
     if (callbackOrDeps === undefined) {
         useEffect(() => {
             const controller = new AbortController()
@@ -49,15 +49,15 @@ export function useAbortSignal(effect: (signal: AbortSignal) => Promise<void>, c
     }, callbackOrDeps)
 }
 
-export function useAbortableFetch(effect: (fetch: typeof window.fetch) => Promise<void>, deps?: DependencyList): void
-export function useAbortableFetch(effect: (fetch: typeof window.fetch) => Promise<void>, callback: () => void, deps?: DependencyList): void
-export function useAbortableFetch(effect: (fetch: typeof window.fetch) => Promise<void>, callbackOrDeps?: (() => void) | DependencyList, deps?: DependencyList) {
+export function useAbortableFetch(effect: (fetch: typeof globalThis.fetch) => Promise<any>, deps?: DependencyList): void
+export function useAbortableFetch(effect: (fetch: typeof globalThis.fetch) => Promise<any>, callback: () => void, deps?: DependencyList): void
+export function useAbortableFetch(effect: (fetch: typeof globalThis.fetch) => Promise<any>, callbackOrDeps?: (() => void) | DependencyList, deps?: DependencyList) {
     if (callbackOrDeps === undefined) {
         useAbortSignal(async signal => {
-            const fetch: typeof window.fetch = (input, init) => {
+            const fetch: typeof globalThis.fetch = function fetch(input, init) {
                 init ??= {}
                 init.signal = signal
-                return window.fetch(input, init)
+                return globalThis.fetch(input, init)
             }
             effect(fetch)
         })
@@ -66,10 +66,10 @@ export function useAbortableFetch(effect: (fetch: typeof window.fetch) => Promis
     if (typeof callbackOrDeps === "function") {
         useAbortSignal(
             async signal => {
-                const fetch: typeof window.fetch = (input, init) => {
+                const fetch: typeof globalThis.fetch = function fetch(input, init) {
                     init ??= {}
                     init.signal = signal
-                    return window.fetch(input, init)
+                    return globalThis.fetch(input, init)
                 }
                 effect(fetch)
             },
@@ -79,10 +79,10 @@ export function useAbortableFetch(effect: (fetch: typeof window.fetch) => Promis
         return
     }
     useAbortSignal(async signal => {
-        const fetch: typeof window.fetch = (input, init) => {
+        const fetch: typeof globalThis.fetch = function fetch(input, init) {
             init ??= {}
             init.signal = signal
-            return window.fetch(input, init)
+            return globalThis.fetch(input, init)
         }
         effect(fetch)
     }, callbackOrDeps)
