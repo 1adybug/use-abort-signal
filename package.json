@@ -1,6 +1,6 @@
 {
     "name": "use-abort-signal",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "🌠 safely cancel `fetch` requests in `useEffect`",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
